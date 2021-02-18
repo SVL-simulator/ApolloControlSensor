@@ -30,13 +30,13 @@ namespace Simulator.Sensors
         public float BrakeInput { get; private set; } = 0f;
 
         [AnalysisMeasurement(MeasurementType.Input)]
-        private float MaxSteer = 0f;
+        public float MaxSteer = 0f;
 
         [AnalysisMeasurement(MeasurementType.Input)]
-        private float MaxAccel = 0f;
+        public float MaxAccel = 0f;
 
         [AnalysisMeasurement(MeasurementType.Input)]
-        private float MaxBrake = 0f;
+        public float MaxBrake = 0f;
 
         float ADAccelInput = 0f;
         float ADSteerInput = 0f;
