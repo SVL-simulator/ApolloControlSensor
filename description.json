@@ -1,4 +1,5 @@
 {
+  "id": "03ea1a65-03ae-4f2e-b670-d7244e48deb4",
   "name": "Apollo Control Sensor",
   "accessType": "public",
   "description": "Example template of a sensor for vehicle Control information.",
