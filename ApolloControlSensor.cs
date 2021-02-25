@@ -108,11 +108,8 @@ namespace Simulator.Sensors
                 var sgn = Mathf.Sign(steeringTarget - steeringAngle);
                 var steeringRate = data.SteerRate.GetValueOrDefault() * sgn;
 
-                if (Mathf.Abs(steeringAngle - steeringTarget) > steeringRate * dt)
-                {
-                    steeringAngle += steeringRate * dt;
-                }
-                else
+                steeringAngle += steeringRate * dt;
+                if (sgn != steeringTarget - steeringAngle)  // prevent oversteering
                 {
                     steeringAngle = steeringTarget;
                 }
