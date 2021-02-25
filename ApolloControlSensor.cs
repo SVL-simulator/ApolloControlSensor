@@ -5,6 +5,8 @@
  *
  */
 
+using SimpleJSON;
+using Simulator.Api;
 using Simulator.Bridge;
 using Simulator.Bridge.Data;
 using Simulator.Utilities;
@@ -37,6 +39,9 @@ namespace Simulator.Sensors
 
         [AnalysisMeasurement(MeasurementType.Input)]
         public float MaxBrake = 0f;
+
+        [AnalysisMeasurement(MeasurementType.Misc)]
+        public bool IsControlReceived = false;
 
         float ADAccelInput = 0f;
         float ADSteerInput = 0f;
@@ -86,6 +91,17 @@ namespace Simulator.Sensors
         {
             bridge.AddSubscriber<VehicleControlData>(Topic, data =>
             {
+                if (!IsControlReceived)
+                {
+                    IsControlReceived = true;
+
+                    if (ApiManager.Instance != null)
+                    {
+                        var jsonData = new JSONObject();
+                        ApiManager.Instance.AddCustom(transform.parent.gameObject, "checkControl", jsonData);
+                    }
+                }
+
                 controlData = data;
                 LastControlUpdate = SimulatorManager.Instance.CurrentTime;
 
