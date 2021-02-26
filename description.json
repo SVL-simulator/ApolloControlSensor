@@ -2,7 +2,7 @@
   "id": "03ea1a65-03ae-4f2e-b670-d7244e48deb4",
   "name": "Apollo Control Sensor",
   "accessType": "public",
-  "description": "Example template of a sensor for vehicle Control information.",
+  "description": "This sensor is required for a vehicle to subscribe to the control topic of Apollo. This sensor also demonstrates how a user can check when SVL Simulator receives the first control message from the AD stack like Apollo. Based on this time, you can start the rest of the simulation or do some other interesting things.\nSee {{DOCS_HOST}}/docs/sensor-json-options/#apollo-control for more details.",
   "licenseName": "LG Content",
   "copyright": "LG Electronics Inc.",
   "tags": [
@@ -13,7 +13,7 @@
       "name": "Control"
     },
     {
-      "name": "Analytics"
+      "name": "Apollo"
     },
     {
       "name": "Default"
