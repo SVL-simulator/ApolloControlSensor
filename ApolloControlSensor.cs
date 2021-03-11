@@ -127,6 +127,9 @@ namespace Simulator.Sensors
         {
             bridge.AddSubscriber<VehicleControlData>(Topic, data =>
             {
+                if (Time.timeScale == 0f)
+                    return;
+
                 if (!IsControlReceived)
                 {
                     IsControlReceived = true;
