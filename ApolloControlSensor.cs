@@ -22,7 +22,7 @@ namespace Simulator.Sensors
     public class ApolloControlSensor : SensorBase, IVehicleInputs
     {
         VehicleControlData Data;
-        VehicleController Controller;
+        IAgentController Controller;
         IVehicleDynamics Dynamics;
 
         double LastControlUpdate = 0f;
@@ -64,13 +64,11 @@ namespace Simulator.Sensors
         private Vector3 StuckStartPosition;
         private float StuckTime;
         private bool EgoIsStuck = false;
-        private AgentController AgentController;
 
         private void Awake()
         {
             LastControlUpdate = SimulatorManager.Instance.CurrentTime;
-            Controller = GetComponentInParent<VehicleController>();
-            AgentController = GetComponentInParent<AgentController>();
+            Controller = GetComponentInParent<IAgentController>();
             Dynamics = GetComponentInParent<IVehicleDynamics>();
         }
 
@@ -88,7 +86,7 @@ namespace Simulator.Sensors
                 StuckTime += Time.fixedDeltaTime;
                 if (StuckTime > StuckTimeThreshold)
                 {
-                    StuckEvent(AgentController.GTID);
+                    StuckEvent(Controller.GTID);
                     EgoIsStuck = true;
                 }
             }
@@ -98,10 +96,10 @@ namespace Simulator.Sensors
                 StuckTime = 0f;
             }
 
-            var projectedLinVec = Vector3.Project(Dynamics.RB.velocity, transform.forward);
-            ActualLinVel = projectedLinVec.magnitude * (Vector3.Dot(Dynamics.RB.velocity, transform.forward) > 0 ? 1.0f : -1.0f);
+            var projectedLinVec = Vector3.Project(Dynamics.Velocity, transform.forward);
+            ActualLinVel = projectedLinVec.magnitude * (Vector3.Dot(Dynamics.Velocity, transform.forward) > 0 ? 1.0f : -1.0f);
 
-            var projectedAngVec = Vector3.Project(Dynamics.RB.angularVelocity, transform.up);
+            var projectedAngVec = Vector3.Project(Dynamics.AngularVelocity, transform.up);
             ActualAngVel = projectedAngVec.magnitude * (projectedAngVec.y > 0 ? -1.0f : 1.0f);
 
             // LastControlUpdate and Time.Time come from Unity.
