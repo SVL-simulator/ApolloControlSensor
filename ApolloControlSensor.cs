@@ -72,9 +72,14 @@ namespace Simulator.Sensors
             Dynamics = GetComponentInParent<IVehicleDynamics>();
         }
 
-        private void Start()
+        protected override void Initialize()
         {
             StuckStartPosition = transform.position;
+        }
+
+        protected override void Deinitialize()
+        {
+            
         }
 
         private void Update()
