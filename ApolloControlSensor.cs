@@ -128,11 +128,8 @@ namespace Simulator.Sensors
 
         public override void OnBridgeSetup(BridgeInstance bridge)
         {
-            bridge.AddSubscriber<VehicleControlData>(Topic, data =>
+            var subscriber = BridgeMessageDispatcher.Instance.GetSynchronousSubscriber<VehicleControlData>(data =>
             {
-                if (Time.timeScale == 0f)
-                    return;
-
                 if (!IsControlReceived)
                 {
                     IsControlReceived = true;
@@ -184,6 +181,8 @@ namespace Simulator.Sensors
                     Dynamics.ShiftFirstGear();
                 }
             });
+
+            bridge.AddSubscriber(Topic, subscriber);
         }
 
         public override void OnVisualize(Visualizer visualizer)
